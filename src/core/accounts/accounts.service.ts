@@ -1,12 +1,8 @@
 import { IAccountsFunctions, IAccountsModel } from "./accounts.interface";
-import { mongoDBService } from "../../databases/mongodb.service";
+import { oracleDBService } from "../../databases/oracle.service";
 import { hashGenerator } from "../../util/hash.generator.util";
 
-/**
- * Database and model names
- */
-const exampleDb = "example-db";
-const AccountsModel = "Accounts";
+import oracledb from "oracledb";
 
 export class AccountsService implements IAccountsFunctions {
   /**
@@ -33,12 +29,62 @@ export class AccountsService implements IAccountsFunctions {
         lastname: _body.lastname,
       };
 
+      const queryBuilder = `
+        INSERT INTO accounts (user_id, group_id, firstname, ... lastname ) VALUES (${_accountInformation.user_id}, ${_accountInformation.group_id}, ${_accountInformation.firstname}, ... ${_accountInformation.lastname} );
+      `;
+
+      const options = {
+        autoCommit: true,
+        bindDefs: [
+          { type: oracledb.STRING },
+          { type: oracledb.STRING },
+          { type: oracledb.STRING, maxSize: 20 },
+          { type: oracledb.STRING, maxSize: 20 }
+        ]
+      };
+
       try {
-        const _createResult: any = await mongoDBService.createDoc(exampleDb, AccountsModel, hashGenerator.injectHash(_accountInformation));
+        const _createResult: any = await oracleDBService.executeInsertQuery(queryBuilder, options);
         /** Resolve the promise */
         resolve({
           statusCode: 200,
-          data: _createResult.ops
+          data: _createResult
+        });
+      }
+      catch (_err) {
+        /** Reject the promise */
+        reject({
+          statusCode: 503,
+          message: _err,
+        });
+      }
+
+    });
+
+  }
+  /**
+   * Summary: Get all accounts
+   * @description Get all accounts
+   * @Method GET
+   * @function getAllAccountsSrv
+   * @param {any} _query, _params or _body optionals
+   * @memberof accounts
+   */
+  public async getAllAccountsSrv(_headers?: any, _query?: any) {
+
+    return new Promise(async (resolve, reject) => {
+
+      const queryBuilder = `
+        SELECT accounts_id, department_id, department_name
+        FROM accounts
+      `;
+
+      try {
+        const _createResult: any = await oracleDBService.executeSelectQuery(queryBuilder);
+        /** Resolve the promise */
+        resolve({
+          statusCode: 200,
+          data: _createResult
         });
       }
       catch (_err) {
@@ -60,20 +106,114 @@ export class AccountsService implements IAccountsFunctions {
    * @param {any} _query, _params or _body
    * @memberof accounts
    */
-  public async getAccountByIdSrvc(_headers: any, _params: any, _query: any) {
+  public async getAccountByIdSrvc(_headers: any, _params: any) {
 
     return new Promise(async (resolve, reject) => {
 
-      const _dbQuery = {
-        user_id: _params.user_id
-      };
+      const queryBuilder = `
+        SELECT accounts_id, department_id, department_name
+        FROM accounts
+        WHERE manager_id = ${_params.manager_id}
+      `;
 
       try {
-        const _findResult = await mongoDBService.findDoc(exampleDb, AccountsModel, _dbQuery);
+        const _createResult: any = await oracleDBService.executeSelectQuery(queryBuilder);
         /** Resolve the promise */
         resolve({
-          statusCode: (_findResult) ? 200 : 404,
-          data: _findResult
+          statusCode: 200,
+          data: _createResult
+        });
+      }
+      catch (_err) {
+        /** Reject the promise */
+        reject({
+          statusCode: 503,
+          message: _err,
+        });
+      }
+
+    });
+
+  }
+  /**
+   * Summary: Update Account
+   * @description Update account
+   * @Method POST
+   * @function updateAccountByIdSrv
+   * @param {any} _query, _params or _body
+   * @memberof accounts
+   */
+  public async updateAccountByIdSrv(_headers: any, _params: any, _body: IAccountsModel) {
+
+    return new Promise(async (resolve, reject) => {
+
+      /**
+       * Summary: Update Account
+       * @description Update account
+       */
+
+      const _accountInformation: IAccountsModel = {
+        firstname: _body.firstname,
+        lastname: _body.lastname,
+      };
+
+      const queryBuilder = `
+        UPDATE accounts SET firstname = ${_accountInformation.firstname}, lastname =${_accountInformation.lastname}
+        WHERE user_id = ${_accountInformation.user_id} AND group_id = ${_accountInformation.group_id};
+      `;
+
+      try {
+        const _createResult: any = await oracleDBService.executeUpdateQuery(queryBuilder);
+        /** Resolve the promise */
+        resolve({
+          statusCode: 200,
+          data: _createResult
+        });
+      }
+      catch (_err) {
+        /** Reject the promise */
+        reject({
+          statusCode: 503,
+          message: _err,
+        });
+      }
+
+    });
+
+  }
+  /**
+   * Summary: Create account
+   * @description Create account
+   * @Method POST
+   * @function deleteAccountByIdSrv
+   * @param {any} _query, _params or _body
+   * @memberof accounts
+   */
+  public async deleteAccountByIdSrv(_headers: any, _params: any, _body: IAccountsModel) {
+
+    return new Promise(async (resolve, reject) => {
+
+      /**
+       * Summary: Update Account
+       * @description Update account
+       */
+
+      const _accountInformation: IAccountsModel = {
+        firstname: _body.firstname,
+        lastname: _body.lastname,
+      };
+
+      const queryBuilder = `
+        DELETE FROM accounts
+        WHERE user_id = ${_accountInformation.user_id} AND group_id = ${_accountInformation.group_id};
+      `;
+
+      try {
+        const _createResult: any = await oracleDBService.executeUpdateQuery(queryBuilder);
+        /** Resolve the promise */
+        resolve({
+          statusCode: 200,
+          data: _createResult
         });
       }
       catch (_err) {
@@ -99,113 +239,18 @@ export class AccountsService implements IAccountsFunctions {
 
     return new Promise(async (resolve, reject) => {
 
-      const _dbQuery = {
-        criteria: {
-          $or: [
-            { "firstname": { "$regex": `^.*${_query.criteria}`, "$options": "si" } },
-            { "lastname": { "$regex": `^.*${_query.criteria}`, "$options": "si" } }
-          ]
-        },
-        skip: _query.skip,
-        limit: _query.limit,
-        sort:  _query.sort
-      };
+      const queryBuilder = `
+        SELECT accounts_id, manager_id, department_id
+        FROM accounts
+        WHERE accounts_id = ${_query.criteria} OR manager_id = ${_query.criteria} OR department_id = ${_query.criteria}
+      `;
 
       try {
-        const _searchResult = await mongoDBService.searchDoc(exampleDb, AccountsModel, _dbQuery);
+        const _createResult: any = await oracleDBService.executeSelectQuery(queryBuilder);
         /** Resolve the promise */
         resolve({
-          statusCode: (_searchResult) ? 200 : 404,
-          data: _searchResult
-        });
-      }
-      catch (_err) {
-        /** Reject the promise */
-        reject({
-          statusCode: 503,
-          message: _err,
-        });
-      }
-
-    });
-
-  }
-
-  /**
-   * Summary: Update the existing account
-   * @description Update the existing account
-   * @Method POST
-   * @function createAccountsSrv
-   * @param {any} _query, _params or _body
-   * @memberof accounts
-   */
-  public async deleteAccountByIdSrv(_headers: any, _params: any, _body: IAccountsModel) {
-
-    return new Promise(async (resolve, reject) => {
-
-      /**
-       * Summary: Query the existing account
-       */
-      const _dbQuery = {
-        user_id: _params.user_id
-      };
-
-      try {
-        const _deleteResult: any = await mongoDBService.deleteDoc(exampleDb, AccountsModel, _dbQuery);
-        /** Resolve the promise */
-        resolve({
-          statusCode: 204,
-          data: _deleteResult
-        });
-      }
-      catch (_err) {
-        /** Reject the promise */
-        reject({
-          statusCode: 503,
-          message: _err,
-        });
-      }
-
-    });
-
-  }
-
-
-  /**
-   * Summary: Update the existing account
-   * @description Update the existing account
-   * @Method POST
-   * @function createAccountsSrv
-   * @param {any} _query, _params or _body
-   * @memberof accounts
-   */
-  public async updateAccountByIdSrv(_headers: any, _params: any, _body: IAccountsModel) {
-
-    return new Promise(async (resolve, reject) => {
-
-      /**
-       * Summary: Query the existing account
-       */
-      const _dbQuery = {
-        user_id: _params.user_id
-      };
-
-      /**
-       * Summary: Create a new account
-       */
-      const _accountInformation = {
-        $set: {
-          firstname: _body.firstname,
-          lastname: _body.lastname,
-        }
-      };
-
-      try {
-        const _updateResult: any = await mongoDBService.updateDoc(exampleDb, AccountsModel, _dbQuery, _accountInformation);
-        /** Resolve the promise */
-        resolve({
-          statusCode: 204,
-          data: _updateResult.result
+          statusCode: 200,
+          data: _createResult
         });
       }
       catch (_err) {
@@ -221,7 +266,6 @@ export class AccountsService implements IAccountsFunctions {
   }
 
 }
-
 
 
 

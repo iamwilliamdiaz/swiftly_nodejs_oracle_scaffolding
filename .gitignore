@@ -5,3 +5,4 @@ src/.DS_Store
 .history/
 .docs/*
 .logs/*
+coverage/*

@@ -35,7 +35,7 @@ var mongoDBService;
     }
     /**
      *
-     * @function findById
+     * @function findDoc
      * @export
      * @param {string} _db
      * @param {string} _model
@@ -59,28 +59,25 @@ var mongoDBService;
     mongoDBService.findDoc = findDoc;
     /**
      *
-     * @function findById
+     * @function findDocByAggr
      * @export
      * @param {string} _db
      * @param {string} _model
      * @param {object} _query
      * @returns
      */
-    function findDocByAggr(_db, _model, _query) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-                const dbInstance = yield getMongoDBInstance();
-                const collection = yield dbInstance.db(_db).collection(_model);
-                yield collection.aggregate(_query).toArray((_err, _result) => __awaiter(this, void 0, void 0, function* () {
-                    if (_err) {
-                        reject(_err);
-                    }
-                    return resolve(_result);
-                }));
-            }));
-        });
-    }
-    mongoDBService.findDocByAggr = findDocByAggr;
+    // export async function findDocByAggr(_db: string, _model: string, _query: any) {
+    //   return new Promise(async (resolve, reject) => {
+    //     const dbInstance = await getMongoDBInstance();
+    //     const collection = await dbInstance.db(_db).collection(_model);
+    //     await collection.aggregate(_query).toArray(async (_err: any, _result: any) => {
+    //       if (_err) {
+    //         reject(_err);
+    //       }
+    //       return resolve(_result);
+    //     });
+    //   });
+    // }
     /**
      *
      * @function createDoc
@@ -170,7 +167,7 @@ var mongoDBService;
                 const dbInstance = yield getMongoDBInstance();
                 const collection = yield dbInstance.db(_db).collection(_model);
                 const searchSkip = (parseInt(_query.skip)) || 0;
-                const searchlimit = (parseInt(_query.limit)) || 100;
+                const searchlimit = (parseInt(_query.limit)) || 1;
                 const searchSort = _query.sort || { _id: -1 };
                 yield collection.aggregate(_query.criteria).skip(searchSkip).limit(searchlimit).sort(searchSort).toArray((_err, _result) => {
                     if (_err) {

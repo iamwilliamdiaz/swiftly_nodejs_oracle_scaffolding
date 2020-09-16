@@ -18,6 +18,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const accountsController = __importStar(require("../core/accounts/accounts.controllers"));
 const apiResponse = __importStar(require("../util/restful.response.util"));
+const auth_middleware_1 = require("./../middlewares/auth.middleware");
 /**
  *
  * @function AccountsRoutes
@@ -26,9 +27,29 @@ const apiResponse = __importStar(require("../util/restful.response.util"));
  */
 function AccountsRoutes(app) {
     /** Get account by Id */
-    app.get("/accounts/:user_id", [], (req, res) => __awaiter(this, void 0, void 0, function* () {
+    app.get("/accounts/:user_id", [auth_middleware_1.isAuthenticated], (req, res) => __awaiter(this, void 0, void 0, function* () {
         try {
             const _result = yield accountsController.getAccountById(req);
+            apiResponse.default(res, _result);
+        }
+        catch (_err) {
+            apiResponse.errorHandler(res, _err);
+        }
+    }));
+    /** Search account by criteria */
+    app.get("/accounts/search/:criteria", [auth_middleware_1.isAuthenticated], (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const _result = yield accountsController.searchAccountByCriteria(req);
+            apiResponse.default(res, _result);
+        }
+        catch (_err) {
+            apiResponse.errorHandler(res, _err);
+        }
+    }));
+    /** Create account */
+    app.get("/accounts", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const _result = yield accountsController.getAllAccounts(req);
             apiResponse.default(res, _result);
         }
         catch (_err) {
@@ -39,6 +60,26 @@ function AccountsRoutes(app) {
     app.post("/accounts", (req, res) => __awaiter(this, void 0, void 0, function* () {
         try {
             const _result = yield accountsController.createAccounts(req);
+            apiResponse.default(res, _result);
+        }
+        catch (_err) {
+            apiResponse.errorHandler(res, _err);
+        }
+    }));
+    /** Create account */
+    app.put("/accounts/:user_id", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const _result = yield accountsController.updateAccountById(req);
+            apiResponse.default(res, _result);
+        }
+        catch (_err) {
+            apiResponse.errorHandler(res, _err);
+        }
+    }));
+    /** Create account */
+    app.delete("/accounts/:user_id", (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const _result = yield accountsController.deleteAccountById(req);
             apiResponse.default(res, _result);
         }
         catch (_err) {

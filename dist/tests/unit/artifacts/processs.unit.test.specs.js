@@ -21,7 +21,6 @@ let server;
  * @description Initiliaze the express server
  */
 beforeAll((done) => __awaiter(void 0, void 0, void 0, function* () {
-    process.env.TEST = "true";
     try {
         server = index_1.default.setup();
         done();

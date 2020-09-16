@@ -18,7 +18,7 @@ const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const cors_1 = __importDefault(require("cors"));
 const yamljs_1 = __importDefault(require("yamljs"));
 const MongoDBStore = require("connect-mongodb-session")(express_session_1.default);
-const schema = yamljs_1.default.load("./definitions/flix-vue.yaml");
+const schema = yamljs_1.default.load("./definitions/swagger-sample.yaml");
 class ExpressServer {
     /**
      * Setup middlewares and handlers
@@ -41,12 +41,13 @@ class ExpressServer {
         return server;
     }
     listen(server, port) {
+        console.log(secrets_util_1.ENVIRONMENT);
         console.log("************************************************************************");
         console.log("**                          Microservice Instance                     **");
         console.log("               App is running at http://localhost:%d in %s mode", port, secrets_util_1.ENVIRONMENT);
         console.log("**                                                                    **");
         console.log("************************************************************************");
-        if (secrets_util_1.ENVIRONMENT === "dev") {
+        if (secrets_util_1.ENVIRONMENT === "dev" || secrets_util_1.ENVIRONMENT === "test") {
             console.log("************************************************************************");
             console.log("**                            SWAGGER EXPLORER                        **");
             console.log("**    To access swagger explorer use http://localhost:%d/explorer   **", port);
@@ -89,13 +90,9 @@ class ExpressServer {
         server.use(express_validator_1.default(), (req, res, next) => {
             next();
         });
-        if (secrets_util_1.ENVIRONMENT === "dev") {
+        if (secrets_util_1.ENVIRONMENT === "dev" || secrets_util_1.ENVIRONMENT === "test") {
             server.use("/explorer", swagger_ui_express_1.default.serveWithOptions({ "cacheControl": false, "dotfiles": "deny" }), swagger_ui_express_1.default.setup(schema));
         }
-        server.use((err, req, res, next) => {
-            res.status(500);
-            res.json(err);
-        });
     }
     setupSessions(server) {
     }
@@ -116,7 +113,7 @@ class ExpressServer {
         server.all("/*?", (req, res) => {
             res.status(403).json({
                 "status": 403,
-                "code": 404,
+                "code": 403,
                 "message": "Please provide a CURL resource for the API.",
                 "developerMessage": "Verify the existence of the CRUD resource.",
             });

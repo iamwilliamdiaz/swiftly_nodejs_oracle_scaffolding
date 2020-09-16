@@ -39,10 +39,10 @@ var mongoDBConnector;
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return yield mongodb_1.MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-                    .then(function (dbo) {
+                    .then((dbo) => {
                     return dbo;
                 })
-                    .catch(function (err) {
+                    .catch((err) => {
                     return err;
                 });
             }

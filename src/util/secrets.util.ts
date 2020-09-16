@@ -23,14 +23,23 @@ export const ENVIRONMENT = process.env.NODE_ENV;
 export const { SESSION_SECRET } = process.env;
 (checkENV(SESSION_SECRET));
 
-export const { MONGO_URI } = process.env;
-(checkENV(MONGO_URI));
-
 export const { MONGO_USERNAME } = process.env;
 (checkENV(MONGO_USERNAME));
 
 export const { MONGO_PASSWORD } = process.env;
 (checkENV(MONGO_PASSWORD));
+
+export const { MONGO_URI } = process.env;
+(checkENV(MONGO_URI));
+
+export const { ORACLE_USERNAME } = process.env;
+(checkENV(ORACLE_USERNAME));
+
+export const { ORACLE_PASSWORD } = process.env;
+(checkENV(ORACLE_PASSWORD));
+
+export const { ORACLE_CONNECTION_STRING } = process.env;
+(checkENV(ORACLE_CONNECTION_STRING));
 
 export const { ENABLE_TOKENIZATION } = process.env;
 (checkENV(ENABLE_TOKENIZATION));

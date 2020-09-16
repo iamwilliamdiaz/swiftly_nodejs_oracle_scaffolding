@@ -12,7 +12,10 @@ const logger = winston_1.default.createLogger({
     transports: [
         new winston_1.default.transports.Console(),
         new winston_1.default.transports.File({ filename: "logs/error.log", level: "error" }),
-        new winston_1.default.transports.File({ filename: "logs/combined.log" })
+        new winston_1.default.transports.File({ filename: "logs/combined.log" }),
+        new winston_1.default.transports.Console({
+            format: winston_1.default.format.combine(winston_1.default.format.timestamp(), winston_1.default.format.colorize({ all: true }), winston_1.default.format.align()),
+        }),
     ]
 });
 const envTransports = {};
@@ -21,17 +24,9 @@ const envTransports = {};
  */
 Object.assign(envTransports, { "consoleOptions": { "level": secrets_util_1.LOGLEVEL } });
 /**
- * Logger Options
- */
-const loggerOptions = {
-    "applicationId": secrets_util_1.API_NAME || "",
-    "transports": envTransports,
-    "environment": secrets_util_1.ENVIRONMENT || "",
-};
-/**
  * New Logger Instance
  */
-if (secrets_util_1.ENVIRONMENT !== "production") {
+if (secrets_util_1.ENVIRONMENT !== "prod") {
     logger.debug("Logging initialized at debug level");
     logger.add(new winston_1.default.transports.Console({
         format: winston_1.default.format.simple()

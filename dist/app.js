@@ -5,7 +5,7 @@ const secrets_util_1 = require("./util/secrets.util");
 class Application {
     static createApplication() {
         const expressServer = new express_server_1.ExpressServer();
-        const serverPort = secrets_util_1.API_PORT || 3002;
+        const serverPort = secrets_util_1.API_PORT;
         expressServer.setup(serverPort);
         this.handleExit(expressServer);
         return expressServer;

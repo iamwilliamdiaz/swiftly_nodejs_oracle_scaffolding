@@ -1,10 +1,10 @@
 export interface IAccountsFunctions {
+    createAccountsSrv: Function;
     getAccountByIdSrvc: Function;
-    updateAccountByIdSrv: Function;
 }
 export interface IAccountsModel {
-    user_id: string;
-    group_id: string;
+    user_id?: string;
+    group_id?: string;
     firstname: string;
     lastname: string;
 }

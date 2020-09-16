@@ -32,6 +32,17 @@ export function AccountsRoutes(app: Application): void {
   });
 
   /** Create account */
+  app.get("/accounts", async (req: Request, res: Response) => {
+    try {
+      const _result = await accountsController.getAllAccounts(req);
+      apiResponse.default(res, _result);
+    }
+    catch (_err) {
+      apiResponse.errorHandler(res, _err);
+    }
+  });
+
+  /** Create account */
   app.post("/accounts", async (req: Request, res: Response) => {
     try {
       const _result = await accountsController.createAccounts(req);

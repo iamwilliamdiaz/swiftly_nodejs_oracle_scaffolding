@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.31% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/26</span>
+                <span class='fraction'>12/26</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.31% </span>
+                <span class="strong">46.15% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/26</span>
+                <span class='fraction'>12/26</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,41 +101,41 @@
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -156,30 +156,30 @@ export class Application {
         return expressServer;
     }
     private static handleExit(express: ExpressServer) {
-        process.on("uncaughtException", (err: Error) =&gt; {
-            console.error("Uncaught exception", err);
-            Application.shutdownProperly(1, express);
+        process.on("uncaughtException", <span class="fstat-no" title="function not covered" >(e</span>rr: Error) =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.error("Uncaught exception", err);</span>
+<span class="cstat-no" title="statement not covered" >            Application.shutdownProperly(1, express);</span>
         });
-        process.on("unhandledRejection", (reason: {} | null | undefined) =&gt; {
-            console.error("Unhandled Rejection at promise", reason);
-            Application.shutdownProperly(2, express);
+        process.on("unhandledRejection", <span class="fstat-no" title="function not covered" >(r</span>eason: {} | null | undefined) =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.error("Unhandled Rejection at promise", reason);</span>
+<span class="cstat-no" title="statement not covered" >            Application.shutdownProperly(2, express);</span>
         });
-        process.on("SIGINT", () =&gt; {
-            console.info("Caught SIGINT");
-            Application.shutdownProperly(128 + 2, express);
+        process.on("SIGINT", <span class="fstat-no" title="function not covered" >() =</span>&gt; {
+<span class="cstat-no" title="statement not covered" >            console.info("Caught SIGINT");</span>
+<span class="cstat-no" title="statement not covered" >            Application.shutdownProperly(128 + 2, express);</span>
         });
-        process.on("SIGTERM", () =&gt; {
-            console.info("Caught SIGTERM");
-            Application.shutdownProperly(128 + 2, express);
+        process.on("SIGTERM", <span class="fstat-no" title="function not covered" >() =</span>&gt; {
+<span class="cstat-no" title="statement not covered" >            console.info("Caught SIGTERM");</span>
+<span class="cstat-no" title="statement not covered" >            Application.shutdownProperly(128 + 2, express);</span>
         });
     }
 &nbsp;
-    private static shutdownProperly(exitCode: number, express: ExpressServer) {
-        Promise.resolve()
-            .then(() =&gt; express.kill())
-            .then(() =&gt; {
-                console.info("Shutdown complete");
-                process.exitCode = exitCode;
+    private <span class="fstat-no" title="function not covered" >static </span>shutdownProperly(exitCode: number, express: ExpressServer) {
+<span class="cstat-no" title="statement not covered" >        Promise.resolve()</span>
+            .then(<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >express.kill())</span>
+            .then(<span class="fstat-no" title="function not covered" >() =</span>&gt; {
+<span class="cstat-no" title="statement not covered" >                console.info("Shutdown complete");</span>
+<span class="cstat-no" title="statement not covered" >                process.exitCode = exitCode;</span>
             })
             .catch(<span class="fstat-no" title="function not covered" >(e</span>rr) =&gt; {
 <span class="cstat-no" title="statement not covered" >                console.error("Error during shutdown", err);</span>
@@ -196,7 +196,7 @@ export class Application {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Sep 15 2020 01:18:39 GMT-0400 (Atlantic Standard Time)
+                at Tue Sep 15 2020 20:52:18 GMT-0400 (Atlantic Standard Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

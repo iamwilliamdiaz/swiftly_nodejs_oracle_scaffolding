@@ -16,18 +16,21 @@ function toJSON(_res, _serviceResponse) {
 exports.default = toJSON;
 /** In case want to support XML in the future */
 // @ts-ignore
+/* istanbul ignore next */
 function toXML(_res, _serviceResponse) {
     return _res.status(_res.statusCode);
 }
 exports.toXML = toXML;
 /** In case want to support MRSS in the future */
 // @ts-ignore
+/* istanbul ignore next */
 function toMRSS(_res, _serviceResponse) {
     return _res.status(_res.statusCode);
 }
 exports.toMRSS = toMRSS;
 /** In case want to support SOAP in the future */
 // @ts-ignore
+/* istanbul ignore next */
 function toSOAP(_res, _serviceResponse) {
     return _res.status(_res.statusCode);
 }

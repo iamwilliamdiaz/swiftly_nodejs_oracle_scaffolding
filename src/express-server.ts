@@ -17,7 +17,7 @@ import cors from "cors";
 import YAML from "yamljs";
 
 const MongoDBStore = require("connect-mongodb-session")(session);
-const schema = YAML.load("./definitions/flix-vue.yaml");
+const schema = YAML.load("./definitions/swagger-sample.yaml");
 
 export class ExpressServer {
     private httpServer?: Server;

@@ -11,46 +11,39 @@ if (fs_1.default.existsSync(".env")) {
 else {
     dotenv_1.default.config({ "path": ".env.dev" });
 }
-/* eslint no-process-env: "error"*/
+/***
+ * Why checkENV? Branching coverage in integration and unit testing
+ */
 exports.API_NAME = process.env.API_NAME;
-// if (!API_NAME) {
-//   throw new Error("Problems to read the API_NAME in the .env file");
-// }
+(checkENV(exports.API_NAME));
 exports.API_PORT = process.env.API_PORT;
-// if (!API_PORT) {
-//   throw new Error("Problems to read the API_PORT in the .env file");
-// }
+(checkENV(exports.API_PORT));
 exports.ENVIRONMENT = process.env.NODE_ENV;
+(checkENV(exports.ENVIRONMENT));
 exports.SESSION_SECRET = process.env.SESSION_SECRET;
-// if (!SESSION_SECRET) {
-//   throw new Error("Problems to read the SESSION_SECRET in the .env file");
-// }
-exports.MONGO_URI = process.env.MONGO_URI;
-// if (!MONGO_URI) {
-//   throw new Error("Problems to read the MONGO_URI in the .env file");
-// }
+(checkENV(exports.SESSION_SECRET));
 exports.MONGO_USERNAME = process.env.MONGO_USERNAME;
-// if (!MONGO_USERNAME) {
-//   throw new Error("Problems to read the MONGO_USERNAME in the .env file");
-// }
+(checkENV(exports.MONGO_USERNAME));
 exports.MONGO_PASSWORD = process.env.MONGO_PASSWORD;
-// if (!MONGO_PASSWORD) {
-//   throw new Error("Problems to read the MONGO_PASSWORD in the .env file");
-// }
+(checkENV(exports.MONGO_PASSWORD));
+exports.MONGO_URI = process.env.MONGO_URI;
+(checkENV(exports.MONGO_URI));
+exports.ORACLE_USERNAME = process.env.ORACLE_USERNAME;
+(checkENV(exports.ORACLE_USERNAME));
+exports.ORACLE_PASSWORD = process.env.ORACLE_PASSWORD;
+(checkENV(exports.ORACLE_PASSWORD));
+exports.ORACLE_CONNECTION_STRING = process.env.ORACLE_CONNECTION_STRING;
+(checkENV(exports.ORACLE_CONNECTION_STRING));
 exports.ENABLE_TOKENIZATION = process.env.ENABLE_TOKENIZATION;
-// if (!ENABLE_TOKENIZATION) {
-//   throw new Error("Problems to read the ENABLE_TOKENIZATION in the .env file");
-// }
+(checkENV(exports.ENABLE_TOKENIZATION));
 exports.ENABLE_TOKENIZATION_SECRET = process.env.ENABLE_TOKENIZATION_SECRET;
-// if (!ENABLE_TOKENIZATION_SECRET) {
-//   throw new Error("Problems to read the ENABLE_TOKENIZATION_SECRET in the .env file");
-// }
-exports.ENABLE_TOKENIZATION_LOCAL_SECRET = process.env.ENABLE_TOKENIZATION_LOCAL_SECRET;
-// if (!ENABLE_TOKENIZATION_LOCAL_SECRET) {
-//   throw new Error("Problems to read the ENABLE_TOKENIZATION_LOCAL_SECRET in the .env file");
-// }
+(checkENV(exports.ENABLE_TOKENIZATION_SECRET));
 exports.LOGLEVEL = process.env.LOGLEVEL;
-// if (!LOGLEVEL) {
-//   throw new Error("Problems to read the LOGLEVEL in the .env file");
-// }
+(checkENV(exports.LOGLEVEL));
+/* istanbul ignore next */
+function checkENV(_envVar) {
+    if (!_envVar) {
+        throw new Error(`Problems to read the ${_envVar} in the .env file`);
+    }
+}
 //# sourceMappingURL=secrets.util.js.map
