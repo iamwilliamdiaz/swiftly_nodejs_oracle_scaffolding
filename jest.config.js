@@ -9,7 +9,7 @@ module.exports = {
       "js",
   ],
   "transform": { "^.+\\.(ts|tsx)$": "ts-jest" },
-  "testMatch": ["**/tests/**/*.integration.test.specs.(ts)"],
+  "testMatch": ["**/tests_disabled/**/*.specs.(ts)"],
   "testEnvironment": "node",
   "collectCoverageFrom": [
     "src/**/{!(ignore-me),}.ts",
